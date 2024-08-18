@@ -1,10 +1,3 @@
-'''Mini Project
-Goal:
-Drop script into folder/directory and use it to read basic data.
-Offer user ability to perform basic statistical function on data.
-Offer user visualisation of data.
-'''
-
 import pandas as pd
 import numpy as np
 import scipy as sp
@@ -13,17 +6,8 @@ import matplotlib.dates as mdates
 from matplotlib import rcParams
 import datetime as dt
 
-pd.options.mode.chained_assignment = None  # default='warn'
-
-def get_csv_name():
-    csv_name = input("What is the name of the csv you would like to plot?\n> ")
-    print(f"Your csv file is: {csv_name}. Plotting...")
-    return csv_name
-
-
-
-def plot_series_and_change(get_csv_name):
-    df = pd.read_csv(get_csv_name, index_col=0)
+def plot_series_and_change(file_chosen, graph_title_name, left_Y_axis_name):
+    df = pd.read_csv(file_chosen, index_col=0)
     df.index = pd.to_datetime(df.index)
     #list(df.columns.values.tolist())
 
@@ -44,11 +28,11 @@ def plot_series_and_change(get_csv_name):
 
     #help(Date_and_AdjClose.plot)
     
-    plot_title = input("What is the title of your figure? \n> ")
+    plot_title = str(graph_title_name)
     MyPlot = Date_and_AdjClose["Adj Close"].plot(title = plot_title)
 
 
-    ylabel1 = input("What is the label of the first Y axis? \n> ")
+    ylabel1 = str(left_Y_axis_name)
     MyPlot.xaxis.set_major_locator(mdates.MonthLocator(bymonth = (1,7)))
     MyPlot.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%b'))
     MyPlot.set_ylabel(ylabel1)
@@ -67,6 +51,3 @@ def plot_series_and_change(get_csv_name):
     rcParams['figure.figsize'] = 15, 6
     plt.grid(True, linestyle = ":")
     plt.show()
-
-
-plot_series_and_change(get_csv_name())
